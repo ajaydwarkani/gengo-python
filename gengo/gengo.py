@@ -367,7 +367,7 @@ class Gengo(object):
                 query_params['data'] = json.dumps(post_data['action'],
                                                   separators=(',', ':'))
 
-            query_hmac = hmac.new(self.private_key,
+            query_hmac = hmac.new(Gengo.compatibletext(self.private_key),
                                   Gengo.compatibletext(query_params['ts']),
                                   sha1)
             query_params['api_sig'] = query_hmac.hexdigest()
@@ -388,7 +388,7 @@ class Gengo(object):
             query_string = urlencode(sorted(query_params.items(),
                                             key=itemgetter(0)))
             if self.private_key is not None:
-                query_hmac = hmac.new(self.private_key,
+                query_hmac = hmac.new(Gengo.compatibletext(self.private_key),
                                       Gengo.compatibletext(query_params['ts']),
                                       sha1)
                 query_params['api_sig'] = query_hmac.hexdigest()
